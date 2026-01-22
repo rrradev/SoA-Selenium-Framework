@@ -1,14 +1,16 @@
 ﻿using OpenQA.Selenium;
+using SeleniumFramework.Extensions;
 
 namespace SeleniumFramework.Pages
 {
     public class LoginPage
     {
         private readonly IWebDriver _driver;
+
         // Elements 
-        private IWebElement _emailInput => _driver.FindElement(By.XPath("//input[@type='email']"));
-        private IWebElement _passwordInput => _driver.FindElement(By.XPath("//input[@type='password']"));
-        private IWebElement _submitButton => _driver.FindElement(By.XPath("//button[@type='submit' and contains(text(), 'Sign In')]"));
+        private IWebElement EmailInput => _driver.FindElement(By.XPath("//input[@type='email']"));
+        private IWebElement PasswordInput => _driver.FindElement(By.XPath("//input[@type='password']"));
+        private IWebElement SubmitButton => _driver.FindElement(By.XPath("//button[@type='submit' and contains(text(), 'Sign In')]"));
 
         public LoginPage(IWebDriver driver)
         {
@@ -18,23 +20,28 @@ namespace SeleniumFramework.Pages
         // Actions
         public void LoginWith(string email, string password)
         {
-            _emailInput.SendKeys(email);
-            _passwordInput.SendKeys(password);
+            this.EmailInput.SendKeys(email);
+            this.PasswordInput.SendKeys(password);
 
-            _submitButton.Click();
+            this.SubmitButton.Click();
+        }
+
+        public bool IsPasswordEmpty()
+        {
+            return string.IsNullOrEmpty(PasswordInput.GetAttribute("value"));
         }
 
         // Validations
         public void VerifyPasswordInputIsEmpty()
         {
-            string? text = _passwordInput.GetAttribute("value");
-
+            string? text = PasswordInput.GetAttribute("value");
             Assert.That(text, Is.EqualTo(string.Empty));
         }
 
-        public bool IsPasswordInputEmpty()
+        public void VerifyErrorMessageIsDisplayed(string errorMessage)
         {
-            return string.IsNullOrWhiteSpace(_passwordInput.GetAttribute("value"));
+            string errorDialogText = _driver.FindElement(By.ClassName("alert")).Text;
+            Assert.That(errorDialogText, Is.EqualTo(errorMessage));
         }
     }
 }
