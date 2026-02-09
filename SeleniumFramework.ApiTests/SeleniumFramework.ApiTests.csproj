@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.12.2" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+        <PackageReference Include="NUnit" Version="3.14.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+        <PackageReference Include="Reqnroll.Microsoft.Extensions.DependencyInjection" Version="3.3.2" />
+        <PackageReference Include="Reqnroll.NUnit" Version="3.3.2" />
+        <PackageReference Include="Reqnroll.Tools.MsBuild.Generation" Version="3.3.2" />
+        <PackageReference Include="RestSharp" Version="113.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Utils\Extensions\" />
+    </ItemGroup>
+
+</Project>
