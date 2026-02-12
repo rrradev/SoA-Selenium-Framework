@@ -8,6 +8,7 @@ namespace SeleniumFramework.Pages
         private IWebElement LoggedUserAnchor => _driver.FindElement(By.XPath("//a[@id='navbarDropdown']"));
         private IWebElement UsernameHeader => _driver.FindElement(By.XPath("//div[contains(@class, 'container-fluid')]/h1"));
         private IWebElement LogoutButton => _driver.FindElement(By.XPath("//a[text()=' Logout']"));
+        private IWebElement UsersPageLink => _driver.FindElement(By.XPath("//a[text()='Users']"));
 
         public DashboardPage(IWebDriver driver) : base(driver)
         {
@@ -32,6 +33,12 @@ namespace SeleniumFramework.Pages
         { 
             string headerText = this.UsernameHeader.Text.Trim();
             Assert.That(headerText, Does.Contain(username));
+        }
+
+        public void NavigateToUsersPage()
+        {
+            _driver.WaitUntilElementIsClickable(this.UsersPageLink);
+            UsersPageLink.Click();
         }
     }
 }

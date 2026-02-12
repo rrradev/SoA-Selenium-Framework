@@ -39,5 +39,11 @@ namespace SeleniumFramework.Steps
         {
             this._dashboardPage.Logout();
         }
+
+        [When("I navigate to the users page")]
+        public void WhenINavigateToTheUsersPage()
+        {
+            this._dashboardPage.NavigateToUsersPage();
+        }
     }
 }

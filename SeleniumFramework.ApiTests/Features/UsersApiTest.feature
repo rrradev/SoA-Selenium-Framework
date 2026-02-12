@@ -17,7 +17,6 @@ Feature: Users API tests
         Given I make a post request to users endpoint with the following data:
           |Field     | Value                |
           |--------- |----------------------|
-          | FirstName | Ivan                |
           | Password  | pass123             |
           | Email     | ivan@automation.com |
           | City      | Sofia               |
@@ -35,3 +34,12 @@ Feature: Users API tests
           | IsAdmin   | 0                      |
           | SirName   | Ivanov                 |
           | Title     | Mr.                    |
+         
+    Scenario: Create user with valid data returns correct errors for missing mandatory fields
+        Given I make a post request to users endpoint with empty mandatory fields
+        Then the response status code should be 400
+        And response should contain error messages
+          | ErrorMessage           |
+          | yyyyy Name is required | 
+          | Sir Name is required   |
+          | Title is required      |

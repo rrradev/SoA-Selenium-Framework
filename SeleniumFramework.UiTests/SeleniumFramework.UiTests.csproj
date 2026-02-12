@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
+    <ProjectReference Include="..\SeleniumFramework.ApiTests\SeleniumFramework.ApiTests.csproj" />
   </ItemGroup>
 
 </Project>

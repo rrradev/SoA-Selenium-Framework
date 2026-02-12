@@ -10,6 +10,8 @@ using SeleniumFramework.Models.Factories;
 using SeleniumFramework.Pages;
 using SeleniumFramework.Utilities;
 using System.Data;
+using RestSharp;
+using SeleniumFramework.ApiTests.Apis;
 
 namespace SeleniumFramework.Hooks
 {
@@ -23,7 +25,7 @@ namespace SeleniumFramework.Hooks
             {
                 return ConfigurationManager.Instance.SettingsModel;
             });
-
+            
             services.AddScoped<IWebDriver>(sp =>
             {
                 //new DriverManager().SetUpDriver(new ChromeConfig());
@@ -40,6 +42,7 @@ namespace SeleniumFramework.Hooks
 
             RegisterPages(services);
             RegisterDatabaseOperations(services);
+            RegisterApi(services);
 
             return services;
         }
@@ -80,6 +83,30 @@ namespace SeleniumFramework.Hooks
             {
                 var driver = sp.GetRequiredService<IWebDriver>();
                 return new RegisterUserPage(driver);
+            });
+            
+            services.AddScoped(sp =>
+            {
+                var driver = sp.GetRequiredService<IWebDriver>();
+                return new UsersPage(driver);
+            });
+        }
+
+        private static void RegisterApi(ServiceCollection services)
+        {
+            services.AddSingleton<RestClient>(sp =>
+            {
+                //TODO - Move the base URL to a configuration file
+                var options = new RestClientOptions("http://localhost:5000");
+                var client = new RestClient(options);
+                client.AddDefaultHeader("Accept", "application/json");
+                return client;
+            });
+        
+            services.AddScoped(sp =>
+            {
+                var client = sp.GetRequiredService<RestClient>();
+                return new UsersApi(client);
             });
         }
     }

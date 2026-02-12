@@ -1,5 +1,9 @@
 ﻿using Reqnroll;
+using SeleniumFramework.ApiTests.Apis;
+using SeleniumFramework.ApiTests.Models.Builders;
+using SeleniumFramework.ApiTests.Models.Dtos;
 using SeleniumFramework.DatabaseOperations.Operations;
+using SeleniumFramework.Models.Builders;
 using SeleniumFramework.Models.Factories;
 using SeleniumFramework.Pages;
 using SeleniumFramework.Utilities;
@@ -15,14 +19,16 @@ namespace SeleniumFramework.Steps
         private readonly LoginPage _loginPage;
         private readonly UserOperations _userOperations;
         private readonly IUserFactory _userFactory;
+        private readonly UsersApi _usersApi;
 
-        public RegisterUserSteps(IUserFactory userFactory, ScenarioContext context, LoginPage loginPage, RegisterUserPage registerUserPage, UserOperations userOperations)
+        public RegisterUserSteps(IUserFactory userFactory, ScenarioContext context, LoginPage loginPage, RegisterUserPage registerUserPage, UserOperations userOperations, UsersApi usersApi)
         {
             this._userFactory = userFactory;
             this._context = context;
             this._loginPage = loginPage; 
             this._registerUserPage = registerUserPage;
             this._userOperations = userOperations;
+            this._usersApi = usersApi;
         }
 
         [Given("I register new user with valid details")]
@@ -42,6 +48,20 @@ namespace SeleniumFramework.Steps
                 if (doUserExist == false)
                     throw new RetryException("Registerd User is not found in the database.");
             });
+        }
+
+        [Given("user is created successfully")]
+        public void GivenUserIsCreatedSuccessfully()
+        {
+            var newUser = new UserDtoBuilder().WithDefaultValues().Build();
+            var userResponse = _usersApi.CreateUser<UserDto>(newUser);
+            Assert.IsNotNull(userResponse);
+            
+            var registeredUser = new UserBuilder()
+                .WithEmail(userResponse.Data?.Email ?? "")
+                .Build();
+            
+            _context[ContextConstants.RegisteredUser] = registeredUser;
         }
     }
 }

@@ -20,12 +20,12 @@ public class UsersApi
         var request = new RestRequest($"{_uri}/{id}", Method.Get);
         return _client.Execute<UserDto>(request);
     }
-
-    public RestResponse<UserDto> CreateUser(UserDto expectedUser)
+    
+    public RestResponse<T> CreateUser<T>(object expectedUser) where T : notnull
     {
         var request = new RestRequest(_uri, Method.Post);
         request.AddJsonBody(expectedUser);
         
-        return _client.Execute<UserDto>(request);
+        return _client.Execute<T>(request);
     }
 }

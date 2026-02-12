@@ -51,7 +51,7 @@ public class UsersApiSteps
         var timestamp = DateTime.Now.ToFileTime();
         var expectedUser = table.CreateInstance<UserDto>();
         expectedUser.Email = expectedUser.Email.Replace("@", $"{timestamp}@");
-        var createUserResponse = _usersApi.CreateUser(expectedUser);
+        var createUserResponse = _usersApi.CreateUser<UserDto>(expectedUser);
         _scenarioContext["StatusCode"] = (int)createUserResponse.StatusCode;
         _scenarioContext["UsersResponse"] = createUserResponse.Data;
     }
@@ -69,5 +69,24 @@ public class UsersApiSteps
                 .Excluding(u => u.Password)
                 .Excluding(u => u.Email)
         );
+    }
+
+    [Given("I make a post request to users endpoint with empty mandatory fields")]
+    public void GivenIMakeAPostRequestToUsersEndpointWithEmptyMandatoryFields()
+    {
+        //TODO: Read from json file
+        var userWithEmptyFields = "    {" + "\n" +
+                                  @"        ""city"": """"," + "\n" +
+                                  @"        ""country"": """"," + "\n" +
+                                  @"        ""email"": """"," + "\n" +
+                                  @"        ""first_name"": """"," + "\n" +
+                                  @"        ""password"": """"," + "\n" +
+                                  @"        ""sir_name"": """"," + "\n" +
+                                  @"        ""title"": """"" + "\n" +
+                                  @"    }";
+
+        var errorsResponse = _usersApi.CreateUser<ErrorsDto>(userWithEmptyFields);
+        _scenarioContext["StatusCode"] = (int)errorsResponse.StatusCode;
+        _scenarioContext["ErrorsResponse"] = errorsResponse.Data;
     }
 }

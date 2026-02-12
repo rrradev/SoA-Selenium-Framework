@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using Reqnroll;
+using SeleniumFramework.ApiTests.Models.Dtos;
 
 namespace SeleniumFramework.ApiTests.Steps;
 
@@ -14,7 +15,8 @@ public class CommonApiSteps
         _scenarioContext = scenarioContext;
     }
 
-    [Then("the response status code should be {int}")]
+    [Then("the response status code should be {int}"),
+     Given("the response status code should be {int}")]
     public void ThenTheResponseStatusCodeShouldBe(int expectedStatusCode)
     {
         var statusCode = _scenarioContext.Get<int>("StatusCode");
@@ -27,5 +29,14 @@ public class CommonApiSteps
     {
         var response = _scenarioContext.Get<string>("RawResponse");
         response.Should().Contain(errorMessage);
+    }
+
+    [Then("response should contain error messages")]
+    public void ThenResponseShouldContainErrorMessages(Reqnroll.Table table)
+    {
+        var expectedErrorMessages = table.Rows.Select(row => row["ErrorMessage"]).ToList();
+        var actualErrorResponse = _scenarioContext.Get<ErrorsDto>("ErrorsResponse");
+        
+        actualErrorResponse.Message.Should().Contain(expectedErrorMessages);
     }
 }
