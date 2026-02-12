@@ -27,7 +27,7 @@ namespace SeleniumFramework.ApiTests.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Users API tests", "    CRUD operations for users endpoints", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Users API tests", "CRUD operations for users endpoints", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
 #line 1 "UsersApiTest.feature"
 #line hidden
@@ -140,7 +140,7 @@ namespace SeleniumFramework.ApiTests.Features
                             "Password"});
                 table1.AddRow(new string[] {
                             "1",
-                            "AdminAA",
+                            "Admin",
                             "pass123"});
 #line 7
         await testRunner.AndAsync("users response should contain the following data:", ((string)(null)), table1, "And ");
@@ -209,6 +209,9 @@ namespace SeleniumFramework.ApiTests.Features
                             "---------",
                             "----------------------"});
                 table2.AddRow(new string[] {
+                            "FirstName",
+                            "Ivan"});
+                table2.AddRow(new string[] {
                             "Password",
                             "pass123"});
                 table2.AddRow(new string[] {
@@ -232,7 +235,7 @@ namespace SeleniumFramework.ApiTests.Features
 #line 17
         await testRunner.GivenAsync("I make a post request to users endpoint with the following data:", ((string)(null)), table2, "Given ");
 #line hidden
-#line 27
+#line 28
         await testRunner.ThenAsync("the response status code should be 200", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
                 global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
@@ -259,7 +262,7 @@ namespace SeleniumFramework.ApiTests.Features
                 table3.AddRow(new string[] {
                             "Title",
                             "Mr."});
-#line 28
+#line 29
         await testRunner.AndAsync("create users response should contain the following data:", ((string)(null)), table3, "And ");
 #line hidden
             }
@@ -276,7 +279,7 @@ namespace SeleniumFramework.ApiTests.Features
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create user with valid data returns correct errors for missing mandatory fields", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 38
+#line 39
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -286,21 +289,21 @@ namespace SeleniumFramework.ApiTests.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 39
+#line 40
         await testRunner.GivenAsync("I make a post request to users endpoint with empty mandatory fields", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 40
+#line 41
         await testRunner.ThenAsync("the response status code should be 400", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
                 global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
                             "ErrorMessage"});
                 table4.AddRow(new string[] {
-                            "Name is required"});
+                            "First Name is required"});
                 table4.AddRow(new string[] {
                             "Sir Name is required"});
                 table4.AddRow(new string[] {
                             "Title is required"});
-#line 41
+#line 42
         await testRunner.AndAsync("response should contain error messages", ((string)(null)), table4, "And ");
 #line hidden
             }
