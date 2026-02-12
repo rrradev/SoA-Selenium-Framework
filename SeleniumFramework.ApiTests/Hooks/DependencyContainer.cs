@@ -14,7 +14,7 @@ public class DependencyContainer
         services.AddSingleton<RestClient>(sp =>
         {
             //TODO - Move the base URL to a configuration file
-            var options = new RestClientOptions("http://localhost:5001");
+            var options = new RestClientOptions("http://localhost:5000");
             var client = new RestClient(options);
             client.AddDefaultHeader("Accept", "application/json");
             return client;
