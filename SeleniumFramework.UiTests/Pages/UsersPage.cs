@@ -1,3 +1,4 @@
+
 using OpenQA.Selenium;
 using SeleniumFramework.Utilities.Extensions;
 
@@ -18,6 +19,8 @@ public class UsersPage: BasePage
 
     public void VerifyUserWithEmailIsPresent(string email)
     {
+        Assert.That(email, Is.Not.Null.And.Not.Empty, "Email should not be null or empty");
+        
         var targetEmailCell = EmailCell(email);
         _driver.ScrollToElement(targetEmailCell);
         

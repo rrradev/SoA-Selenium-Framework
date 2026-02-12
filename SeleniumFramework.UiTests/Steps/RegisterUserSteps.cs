@@ -55,7 +55,7 @@ namespace SeleniumFramework.Steps
         {
             var newUser = new UserDtoBuilder().WithDefaultValues().Build();
             var userResponse = _usersApi.CreateUser<UserDto>(newUser);
-            Assert.IsNotNull(userResponse);
+            Assert.IsNotNull(userResponse.Data);
             
             var registeredUser = new UserBuilder()
                 .WithEmail(userResponse.Data?.Email ?? "")
