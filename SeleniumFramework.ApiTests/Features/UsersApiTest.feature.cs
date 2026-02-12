@@ -295,7 +295,7 @@ namespace SeleniumFramework.ApiTests.Features
                 global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
                             "ErrorMessage"});
                 table4.AddRow(new string[] {
-                            "yyyyy Name is required"});
+                            "Name is required"});
                 table4.AddRow(new string[] {
                             "Sir Name is required"});
                 table4.AddRow(new string[] {
